@@ -20,30 +20,8 @@ export default async function AdminPage() {
 
   return (
     <div className="overflow-x-auto">
-      <table className="table table-zebra table-hover w-full">
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Rôle Admin</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.full_name}</td>
-              <td>{user.email}</td>
-              <td>
-                {user.is_admin ? (
-                  <span className="badge badge-success">Admin</span>
-                ) : (
-                  <span className="badge badge-neutral">User</span>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h1 className="text-2xl font-bold mb-4">Tableau de bord Admin</h1>
+      <h2 className="text-xl">Vous avez {users.length} utilisateurs</h2>
     </div>
   );
 }
