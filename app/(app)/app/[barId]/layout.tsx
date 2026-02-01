@@ -2,11 +2,14 @@ import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function AdminLayout({
+export default async function AppLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ barId: string }>;
 }) {
+  const { barId } = await params;
   const supabase = await createClient();
 
   // 1) Vérifie session
@@ -18,60 +21,59 @@ export default async function AdminLayout({
     redirect("/auth");
   }
 
-  // 2) Charge le profil (table public)
-  const { data: profile, error } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-  console.log("Profil utilisateur:", profile);
+  // Vérification que le [barId] appartient bien à l'utilisateur connecté
+  const { data: bars, error : barsError } = await supabase
+    .from("bar")
+    .select("id")
+    .eq("id", barId)
+    .maybeSingle();
 
-  // Si pas de profil ou erreur -> refuse
-  if (error || !profile) {
-    redirect("/forbidden");
-  }
+    console.log({bars, barsError});
 
-  // 3) Check admin
-  const isAdmin = profile.is_admin === true;
-  if (!isAdmin) {
-    redirect("/forbidden");
-  }
+    if (barsError || !bars) {
+      redirect("/forbidden");
+    }
 
-  // 4) OK -> rend l'admin
+  // 2) OK -> rend l'app
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="navbar bg-base-100 shadow-sm border-4 border-base-200 rounded-box mb-4">
         <div className="flex-1">
-          <Link href="/" className="btn btn-ghost text-xl">
+          <Link href="/app" className="btn btn-ghost text-xl">
             Pinty
           </Link>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link href="/admin/" className="block">
+              <Link href="/app" className="block">
                 Dashboard
               </Link>
             </li>
             <li>
-              <Link href="/admin/users" className="block">
-                Utilisateurs
+              <Link href="/app/users" className="block">
+                Mes utilisateurs
               </Link>
             </li>
             <li>
-              <Link href="/admin/beers" className="block">
-                Bières
+              <Link href="/app/beers" className="block">
+                Mes bières
+              </Link>
+            </li>
+            <li>
+              <Link href="/app/kegs" className="block">
+                Mes fûts
               </Link>
             </li>
             <li>
               <details>
-                <summary>Bars</summary>
+                <summary>Mes tireuses</summary>
                 <ul className="bg-base-100 rounded-t-none p-2">
                   <li>
-                    <a>Bar 1</a>
+                    <a>Tireuse 1</a>
                   </li>
                   <li>
-                    <a>Bar 2</a>
+                    <a>Tireuse 2</a>
                   </li>
                 </ul>
               </details>
