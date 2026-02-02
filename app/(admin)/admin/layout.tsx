@@ -1,4 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
+import { Barrel, Gauge, Store, Users } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -39,47 +41,56 @@ export default async function AdminLayout({
 
   // 4) OK -> rend l'admin
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="navbar bg-base-100 shadow-sm border-4 border-base-200 rounded-box mb-4">
-        <div className="flex-1">
-          <Link href="/" className="btn btn-ghost text-xl">
-            Pinty
-          </Link>
-        </div>
-        <div className="flex-none">
-          <ul className="menu menu-horizontal px-1">
+    <div className="">
+        
+        <aside className="h-screen sticky top-0 overflow-y-auto w-60 py-6 px-4 bg-base-200 block  float-left">
+          <a className="btn py-7 btn-ghost">
+            <Image
+              alt="Logo"
+              src="/logo.webp"
+              width={38}
+              height={38}
+              className="rounded-xl mr-2"
+            />
+            Dashbord Admin
+          </a>
+
+          <ul className="menu px-0 flex">
+            <li className="menu-title">Statistiques</li>
             <li>
-              <Link href="/admin/" className="block">
+              <Link className="pr-26" href="/admin">
+                <Gauge size={16}/>
                 Dashboard
               </Link>
             </li>
+            <li className="menu-title">Gestions</li>
             <li>
-              <Link href="/admin/users" className="block">
+              <Link href="/admin/users">
+                <Users size={16}/>
                 Utilisateurs
               </Link>
             </li>
             <li>
-              <Link href="/admin/beers" className="block">
+              <Link href="/admin/beers">
+                <Barrel size={16}/>
                 Bières
               </Link>
             </li>
             <li>
-              <details>
-                <summary>Bars</summary>
-                <ul className="bg-base-100 rounded-t-none p-2">
-                  <li>
-                    <a>Bar 1</a>
-                  </li>
-                  <li>
-                    <a>Bar 2</a>
-                  </li>
-                </ul>
-              </details>
+              <Link href="/admin/futs">
+                <Barrel size={16}/>
+                Futs
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/bars">
+                <Store size={16}/>
+                Bars
+              </Link>
             </li>
           </ul>
-        </div>
-      </div>
-      {children}
+        </aside>  
+        <main className="ml-60 p-4">{children}</main>
     </div>
   );
 }
