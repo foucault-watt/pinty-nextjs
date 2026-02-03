@@ -1,4 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
+import { Barrel, Beer, Gauge, Menu, Users } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -22,66 +24,94 @@ export default async function AppLayout({
   }
 
   // Vérification que le [barId] appartient bien à l'utilisateur connecté
-  const { data: bars, error : barsError } = await supabase
+  const { data: bars, error: barsError } = await supabase
     .from("bar")
-    .select("id")
+    .select("*")
     .eq("id", barId)
     .maybeSingle();
 
-    console.log({bars, barsError});
+  console.log({ bars, barsError });
 
-    if (barsError || !bars) {
-      redirect("/forbidden");
-    }
+  if (barsError || !bars) {
+    redirect("/forbidden");
+  }
 
-  // 2) OK -> rend l'app
+  // 2) OK -> rend l'app avec drawer
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="navbar bg-base-100 shadow-sm border-4 border-base-200 rounded-box mb-4">
-        <div className="flex-1">
-          <Link href="/app" className="btn btn-ghost text-xl">
-            Pinty
-          </Link>
+    <div className="drawer lg:drawer-open">
+      {/* Input checkbox caché pour contrôler le drawer */}
+      <input id="app-drawer" type="checkbox" className="drawer-toggle" />
+
+      {/* Zone principale (contenu + bouton hamburger sur mobile) */}
+      <div className="drawer-content flex flex-col">
+        {/* Bouton hamburger visible uniquement sur mobile */}
+        <div className="p-4 lg:hidden">
+          <label
+            htmlFor="app-drawer"
+            className="btn btn-square btn-ghost drawer-button"
+            aria-label="Ouvrir le menu"
+          >
+            <Menu size={24} />
+          </label>
         </div>
-        <div className="flex-none">
-          <ul className="menu menu-horizontal px-1">
+
+        {/* Contenu de la page */}
+        <main className="p-4">{children}</main>
+      </div>
+
+      {/* Sidebar (drawer-side) */}
+      <div className="drawer-side">
+        {/* Overlay pour fermer le drawer sur mobile */}
+        <label
+          htmlFor="app-drawer"
+          aria-label="Fermer le menu"
+          className="drawer-overlay"
+        ></label>
+
+        {/* Contenu de la sidebar */}
+        <aside className="min-h-full w-60 bg-base-200 py-6 px-4">
+          <a className="btn py-7 btn-ghost">
+            <Image
+              alt="Logo"
+              src="/logo.webp"
+              width={38}
+              height={38}
+              className="rounded-xl mr-2"
+            />
+            {bars.name}
+          </a>
+
+          <ul className="menu px-0 flex">
+            <li className="menu-title">Statistiques</li>
             <li>
-              <Link href="/app" className="block">
+              <Link className="pr-26" href={`/app/${barId}`}>
+                <Gauge size={16} />
                 Dashboard
               </Link>
             </li>
+            <li className="menu-title">Gestion du bar</li>
             <li>
-              <Link href="/app/users" className="block">
-                Mes utilisateurs
+              <Link href={`/app/${barId}/kegs`}>
+                <Barrel size={16} />
+                Futs
               </Link>
             </li>
             <li>
-              <Link href="/app/beers" className="block">
-                Mes bières
+              <Link href={`/app/${barId}/beers`}>
+                <Beer size={16} />
+                Bières
               </Link>
             </li>
+            <li className="menu-title">Configuration</li>
             <li>
-              <Link href="/app/kegs" className="block">
-                Mes fûts
+              <Link href={`/app/${barId}/users`}>
+                <Users size={16} />
+                Membres
               </Link>
-            </li>
-            <li>
-              <details>
-                <summary>Mes tireuses</summary>
-                <ul className="bg-base-100 rounded-t-none p-2">
-                  <li>
-                    <a>Tireuse 1</a>
-                  </li>
-                  <li>
-                    <a>Tireuse 2</a>
-                  </li>
-                </ul>
-              </details>
             </li>
           </ul>
-        </div>
+        </aside>
       </div>
-      {children}
     </div>
   );
 }

@@ -3,21 +3,23 @@ import { hasFlag } from "country-flag-icons";
 import Image from "next/image";
 import BeerType from "@/components/beer/beerType";
 
-export default async function beersAdminPage() {
+export default async function beersAppPage() {
   const supabase = await createClient();
 
-  // On récupère toutes les bières
   const { data: beers, error: beersError } = await supabase
     .from("beer")
     .select("*")
     .order("created_at", { ascending: false });
-
-  if (beersError)
+    
+  if (beersError) {
     return (
-      <div className="text-error">Erreur lors du chargement des bières</div>
+      <div className="text-error">
+        Erreur lors du chargement des bières : {beersError.message}
+      </div>
     );
+  }
 
-  const Flag = ({ country }) => {
+  const Flag = ({ country }: { country: string }) => {
     if (!country) return null;
     const cc = country.toUpperCase();
     if (!hasFlag(cc)) return null;
