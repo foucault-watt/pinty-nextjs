@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { hasFlag } from "country-flag-icons";
 import Image from "next/image";
 
-export default async function AdminPage() {
+export default async function beersAdminPage() {
   const supabase = await createClient();
 
   // On récupère toutes les bières
