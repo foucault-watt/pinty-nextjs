@@ -1,5 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
-import { Barrel, Beer, Gauge, Menu, Users } from "lucide-react";
+import { faucet } from "@lucide/lab";
+import {
+  Barrel,
+  Beer,
+  CircuitBoard,
+  Gauge,
+  Icon,
+  Menu,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -102,11 +111,23 @@ export default async function AppLayout({
                 Bières
               </Link>
             </li>
+            <li>
+              <Link href={`/app/${barId}/dispensers`}>
+                <Icon iconNode={faucet} size={16} />
+                Tireuses
+              </Link>
+            </li>
             <li className="menu-title">Configuration</li>
             <li>
               <Link href={`/app/${barId}/users`}>
                 <Users size={16} />
                 Membres
+              </Link>
+            </li>
+            <li>
+              <Link href={`/app/${barId}/boxes`}>
+                <CircuitBoard size={16} />
+                Capteurs
               </Link>
             </li>
           </ul>
