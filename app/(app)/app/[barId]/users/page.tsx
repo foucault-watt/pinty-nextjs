@@ -1,39 +1,49 @@
+import roleType from "@/components/beer/roleType";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function usersAdminPage() {
+export default async function usersAdminPage({
+  params,
+}: {
+  params: Promise<{ barId: string }>;
+}) {
+  const { barId } = await params;
   const supabase = await createClient();
 
-  // On récupère tous les profils
-  const { data: usersData, error: usersError } = await supabase
+  // 1. UNE SEULE requête qui fait la jointure
+  // On demande le profil + les infos de la table de liaison filtrées sur ce bar
+  const { data: users, error } = await supabase
     .from("profiles")
-    .select("*")
-    .order("created_at", { ascending: false });
+    .select(`
+      id,
+      full_name,
+      email,
+      ref_profiles_bar!inner (
+        role,
+        bar_id
+      )
+    `)
+    .eq("ref_profiles_bar.bar_id", barId); // On ne veut que les gens de CE bar
 
-  const { data: ref_profiles_barData, error: ref_profiles_barError } = await supabase
-    .from("ref_profiles_bar")
-    .select("*");
-
-  if (usersError)
-    return (
-      <div className="text-error">
-        Erreur lors du chargement des utilisateurs
-      </div>
-    );
+  if (error) return <div className="text-error">Erreur : {error.message}</div>;
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-zebra table-hover w-full">
+    <div className="overflow-x-auto p-4">
+      <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Nom</th>
             <th>Email</th>
+            <th>Rôle</th>
           </tr>
         </thead>
         <tbody>
-          {usersData.map((userData) => (
-            <tr key={userData.id}>
-              <td>{userData.full_name}</td>
-              <td>{userData.email}</td>
+          {users?.map((user) => (
+            <tr key={user.id}>
+              <td>{user.full_name}</td>
+              <td>{user.email}</td>
+              <td>
+                {roleType({ type: user.ref_profiles_bar[0]?.role || "undefined" })}
+              </td>
             </tr>
           ))}
         </tbody>

@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
-export default async function kegsAdminPage() {
+export default async function kegsAppPage() {
   const supabase = await createClient();
 
   // On récupère tous les futs
@@ -29,15 +29,16 @@ export default async function kegsAdminPage() {
       </div>
     );
 
-    const kegStatus = (keg: { status: string }) => {
-      if (keg.status === "empty") return "Vide";
-      if (keg.status === "in_use") return "En cours d'utilisation";
-      if (keg.status === "full") return "Plein";
-      return "Inconnu";
-    }
+  const kegStatus = (keg: { status: string }) => {
+    if (keg.status === "empty") return "Vide";
+    if (keg.status === "in_use") return "En cours d'utilisation";
+    if (keg.status === "full") return "Plein";
+    return "Inconnu";
+  };
 
   return (
     <div className="overflow-x-auto">
+      <h2>Bières</h2>
       <table className="table table-zebra table-hover w-full">
         <thead>
           <tr>
@@ -51,7 +52,10 @@ export default async function kegsAdminPage() {
           {kegs.map((keg) => (
             <tr key={keg.id}>
               <td>
-                <Link href={`/admin/beers/${keg.beer_id}`} className="link link-primary">
+                <Link
+                  href={`/app/beers/${keg.beer_id}`}
+                  className="link link-primary"
+                >
                   {beers.find((beer) => beer.id === keg.beer_id)?.name ||
                     "Inconnu"}
                 </Link>

@@ -125,7 +125,7 @@ export default async function AppLayout({
               </Link>
             </li>
             <li>
-              <Link href={`/app/${barId}/boxes`}>
+              <Link href={`/app/${barId}/sensors`}>
                 <CircuitBoard size={16} />
                 Capteurs
               </Link>
