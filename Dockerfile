@@ -1,7 +1,7 @@
 # Next.js standalone Dockerfile (npm)
 # Works best with next.config.ts => output: "standalone"
 
-FROM node:20-bookworm-slim AS base
+FROM node:20-bullseye-slim AS base
 WORKDIR /app
 
 # 1) deps
@@ -17,7 +17,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # 3) runner
-FROM node:20-bookworm-slim AS runner
+FROM node:20-bullseye-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
