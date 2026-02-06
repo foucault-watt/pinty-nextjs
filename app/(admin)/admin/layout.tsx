@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { Barrel, Beer, Gauge, Store, Users } from "lucide-react";
+import { Barrel, Beer, Gauge, Link2, Store, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -60,6 +60,12 @@ export default async function AdminLayout({
             <Link className="pr-26" href="/admin">
               <Gauge size={16} />
               Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link className="pr-26" href="/admin/connection">
+              <Link2 size={16} />
+              Connexions
             </Link>
           </li>
           <li className="menu-title">Gestions</li>
