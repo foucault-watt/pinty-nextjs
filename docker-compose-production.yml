@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  pinty:
+    build: .
+    image: pinty:latest
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - HOSTNAME=0.0.0.0
+      - PORT=3000
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pinty.rule=Host(`YOUR_DOMAIN`)"
+      - "traefik.http.routers.pinty.entrypoints=websecure"
+      - "traefik.http.services.pinty.loadbalancer.server.port=3000"
+
+networks:
+  proxy:
+    external: true
