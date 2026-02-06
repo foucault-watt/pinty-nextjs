@@ -20,6 +20,10 @@ export const appleWebAppMeta = (
     <meta name="apple-mobile-web-app-title" content="Pinty" />
 );
 
+export const googleSiteVerificationMeta = (
+  <meta name="google-site-verification" content="TOkVRHTG-kfIR3RBIaAgWFCDguFGvreMeC26btwRSkE" />
+);
+
 export default function RootLayout({
   children,
 }: Readonly<{
