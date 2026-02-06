@@ -15,13 +15,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Pinty",
   description: "Gérer votre cave à bière simplement",
+  verification: {
+    google: "TOkVRHTG-kfIR3RBIaAgWFCDguFGvreMeC26btwRSkE",
+  },
 };
-export const appleWebAppMeta = (
-    <meta name="apple-mobile-web-app-title" content="Pinty" />
-);
 
-export const googleSiteVerificationMeta = (
-  <meta name="google-site-verification" content="TOkVRHTG-kfIR3RBIaAgWFCDguFGvreMeC26btwRSkE" />
+export const appleWebAppMeta = (
+  <meta name="apple-mobile-web-app-title" content="Pinty" />
 );
 
 export default function RootLayout({
