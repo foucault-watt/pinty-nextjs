@@ -69,7 +69,7 @@ export default async function HistoryPage() {
       {/* Header de la page */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Historique Pinty 🍺</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">Historique Coin-Coin 🍺</h1>
           <p className="text-sm text-gray-500 mt-1 italic">Suivi des tirages en temps réel (via MQTT)</p>
         </div>
         <div className="stats shadow bg-base-200">

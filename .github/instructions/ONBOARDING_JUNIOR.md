@@ -1,4 +1,4 @@
-# Onboarding Junior — PINTY
+# Onboarding Junior — Coin-Coin
 
 ## Où modifier quoi ?
 - UI pure : src/components

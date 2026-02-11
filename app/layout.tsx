@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pinty",
+  title: "Coin-Coin",
   description: "Gérer votre cave à bière simplement",
   verification: {
     google: "TOkVRHTG-kfIR3RBIaAgWFCDguFGvreMeC26btwRSkE",

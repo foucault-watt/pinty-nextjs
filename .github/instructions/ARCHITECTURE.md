@@ -1,4 +1,4 @@
-# Architecture PINTY (Web)
+# Architecture Coin-Coin (Web)
 
 ## Flux principal
 Device (ESP32) -> Broker MQTT -> Bridge (service) -> DB (Supabase/Postgres) -> Next.js Dashboard

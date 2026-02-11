@@ -1,4 +1,4 @@
-# Conventions Projet PINTY (Next.js)
+# Conventions Projet Coin-Coin (Next.js)
 
 ## Objectif
 Code clair, modifiable vite, sans magie.

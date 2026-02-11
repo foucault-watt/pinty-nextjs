@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center flex-col">
       <main className="flex min-h-screen w-full flex-col items-center py-32 px-16 ">
-        <h1 className="text-5xl font-bold mb-8">Bienvenue sur Pinty!</h1>
+        <h1 className="text-5xl font-bold mb-8">Bienvenue sur Coin-Coin !</h1>
         <div className="flex flex-row gap-4">
           <Link href="/app" className="btn btn-primary">
             Accéder à l&apos;application
@@ -26,7 +26,7 @@ export default function Home() {
               height={38}
               className="inline rounded-xl"
             />
-            Pinty
+            Coin-Coin
           </p>
           <small>Copyright © 2025 - Tous droits réservés</small>
         </aside>
